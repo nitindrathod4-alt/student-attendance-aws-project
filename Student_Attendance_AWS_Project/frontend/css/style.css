@@ -1,0 +1,17 @@
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f7fb;color:#1f2937}
+header{background:#fff;padding:18px 40px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e5e7eb}
+.brand{font-size:20px;font-weight:bold;color:#2563eb}
+nav a{margin-left:22px;text-decoration:none;color:#4b5563}
+.hero{text-align:center;padding:75px 20px;background:linear-gradient(180deg,#eaf2ff,#f5f7fb)}
+.hero h1{color:#1d4ed8;font-size:34px;margin-bottom:12px}
+.hero p{margin-bottom:25px;color:#6b7280}
+button{background:#2563eb;color:white;border:0;padding:12px 25px;border-radius:7px;cursor:pointer}
+.content{max-width:950px;margin:auto;padding:45px 20px}
+.content h2{margin-bottom:20px}
+.status,.student,.card{background:white;border:1px solid #e5e7eb;border-radius:10px}
+.status{padding:25px}
+.student{padding:18px;margin:10px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}
+.card{padding:25px;text-align:center}
+footer{text-align:center;padding:30px;color:#6b7280}
