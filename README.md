@@ -2,15 +2,44 @@
 
 ### AWS Cloud Deployment • MongoDB Atlas • REST API • High Availability
 
-[![AWS](https://img.shields.io/badge/AWS-Cloud-orange?logo=amazon-aws)](https://aws.amazon.com/)
-[![MongoDB Atlas](https://img.shields.io/badge/MongoDB-Atlas-green?logo=mongodb)](https://www.mongodb.com/atlas)
-[![EC2](https://img.shields.io/badge/AWS-EC2-blue?logo=amazon-aws)](https://aws.amazon.com/ec2/)
-[![Route 53](https://img.shields.io/badge/AWS-Route%2053-blue?logo=amazon-aws)](https://aws.amazon.com/route53/)
-[![ALB](https://img.shields.io/badge/AWS-Application%20Load%20Balancer-blue?logo=amazon-aws)](https://aws.amazon.com/elasticloadbalancing/)
-[![S3](https://img.shields.io/badge/AWS-S3-blue?logo=amazon-aws)](https://aws.amazon.com/s3/)
-[![CloudWatch](https://img.shields.io/badge/AWS-CloudWatch-blue?logo=amazon-aws)](https://aws.amazon.com/cloudwatch/)
+<p align="center">
+  <img src="https://img.shields.io/badge/AWS-Cloud-orange?logo=amazon-aws" />
+  <img src="https://img.shields.io/badge/MongoDB-Atlas-green?logo=mongodb" />
+  <img src="https://img.shields.io/badge/AWS-EC2-blue?logo=amazon-aws" />
+  <img src="https://img.shields.io/badge/AWS-Route%2053-blue?logo=amazon-aws" />
+  <img src="https://img.shields.io/badge/AWS-ALB-blue?logo=amazon-aws" />
+  <img src="https://img.shields.io/badge/AWS-S3-blue?logo=amazon-aws" />
+  <img src="https://img.shields.io/badge/AWS-CloudWatch-blue?logo=amazon-aws" />
+</p>
 
-> A production-style cloud deployment project demonstrating how a student attendance and result management application can be hosted securely and reliably on AWS, with MongoDB Atlas used as the managed database layer.
+> 🚀 A production-style cloud deployment project demonstrating a student attendance and result management application hosted on AWS, with MongoDB Atlas as the managed database layer.
+
+## 📊 Project Dashboard
+
+| Component | Status |
+|---|---|
+| ☁️ AWS Infrastructure | 🟢 Active |
+| 🌐 Route 53 | 🟢 Configured |
+| ⚖️ Application Load Balancer | 🟢 Configured |
+| 🖥️ EC2 Backend | 🟢 Deployed |
+| 🍃 MongoDB Atlas | 🟢 Connected |
+| 📦 S3 Frontend | 🟢 Deployed |
+| 🔐 Security | 🟢 Configured |
+| 📊 CloudWatch | 🟢 Monitoring |
+| 📚 Deployment Guide | 🟢 Available |
+
+## 🧭 Quick Navigation
+
+- [📌 Overview](#-project-overview)
+- [🏗️ Architecture](#️-architecture)
+- [☁️ AWS Services](#️-aws-services)
+- [✨ Features](#-key-features)
+- [🚀 Deployment](#-deployment)
+- [🍃 MongoDB Atlas](#-mongodb-atlas)
+- [🔐 Security](#-security)
+- [📊 Monitoring](#-monitoring)
+- [🧪 Testing](#-testing)
+- [💼 Resume](#-resume-description)
 
 ---
 
@@ -18,19 +47,13 @@
 
 The **Student Attendance & Result Management System** provides a centralized platform for managing student records, attendance and academic results.
 
-The infrastructure is designed around AWS cloud services:
-
 ```text
-Route 53
-    ↓
-Application Load Balancer
-    ↓
-EC2 Backend/API
-    ↓
-MongoDB Atlas
-```
+Route 53 → ALB → EC2 Backend/API → MongoDB Atlas
+                    ↑
+              CloudWatch Monitoring
 
-Static frontend assets are hosted through **Amazon S3**, while **VPC, IAM, Security Groups and CloudWatch** provide networking, security and monitoring.
+S3 → Static Frontend
+```
 
 ### 🎯 Project Goals
 
@@ -38,9 +61,9 @@ Static frontend assets are hosted through **Amazon S3**, while **VPC, IAM, Secur
 - Build a secure and scalable cloud architecture
 - Separate frontend, backend and database layers
 - Implement managed DNS and load balancing
-- Use MongoDB Atlas instead of self-managed database infrastructure
+- Use MongoDB Atlas as the managed database layer
 - Demonstrate AWS networking, security and monitoring
-- Create a resume-ready DevOps/Cloud project
+- Build a strong DevOps/Cloud portfolio project
 
 ---
 
@@ -55,42 +78,39 @@ Static frontend assets are hosted through **Amazon S3**, while **VPC, IAM, Secur
                     |  Custom Domain   |
                     +--------+---------+
                              |
-                             v
-                    +------------------+
-                    |       S3         |
-                    | Static Frontend  |
-                    +------------------+
-                             |
-                         API Requests
-                             |
-                             v
-                    +------------------+
-                    |       ALB        |
-                    | Application LB   |
-                    +--------+---------+
-                             |
                   +----------+----------+
                   |                     |
                   v                     v
-          +-------------+       +-------------+
-          |   EC2 AZ-1  |       |   EC2 AZ-2  |
-          | Backend/API |       | Backend/API |
-          +------+------+       +------+------+
-                  |                     |
-                  +----------+----------+
-                             |
-                             v
-                    +------------------+
-                    |  MongoDB Atlas   |
-                    |    Database      |
-                    +------------------+
+          +-------------+       +------------------+
+          |     S3      |       |       ALB        |
+          |   Frontend  |       | Application Load |
+          +-------------+       |    Balancer      |
+                                +--------+---------+
+                                         |
+                              +----------+----------+
+                              |                     |
+                              v                     v
+                       +-------------+       +-------------+
+                       |   EC2 AZ-1  |       |   EC2 AZ-2  |
+                       | Backend/API |       | Backend/API |
+                       +------+------+       +------+------+ 
+                              |                     |
+                              +----------+----------+
+                                         |
+                                         v
+                                +------------------+
+                                |  MongoDB Atlas   |
+                                |    Database      |
+                                +------------------+
 
        VPC → Network Isolation
        IAM → Access Control
+       ACM → HTTPS
        CloudWatch → Monitoring & Logs
 ```
 
-## 🔄 Request Flow
+<details>
+<summary>🔍 View request flow</summary>
 
 ```text
 User
@@ -110,26 +130,42 @@ Response
 User
 ```
 
+</details>
+
 ---
 
 # ☁️ AWS Services
 
 | Service | Role |
 |---|---|
-| **Amazon VPC** | Secure cloud networking |
-| **Amazon EC2** | Backend/API compute |
-| **Application Load Balancer** | Traffic distribution & health checks |
-| **Amazon Route 53** | DNS and custom domain |
-| **Amazon S3** | Static frontend hosting |
-| **AWS IAM** | Identity and access management |
-| **Security Groups** | Network-level security |
-| **AWS CloudWatch** | Metrics, logs and monitoring |
-| **AWS Certificate Manager** | HTTPS/SSL certificates |
-| **AWS Systems Manager** | Secure EC2 administration |
-| **AWS Secrets Manager / Parameter Store** | Secure application secrets |
-| **MongoDB Atlas** | Managed database |
+| Amazon VPC | Secure cloud networking |
+| Amazon EC2 | Backend/API compute |
+| Application Load Balancer | Traffic distribution & health checks |
+| Amazon Route 53 | DNS and custom domain |
+| Amazon S3 | Static frontend hosting |
+| AWS IAM | Identity and access management |
+| Security Groups | Network-level security |
+| AWS CloudWatch | Metrics, logs and monitoring |
+| AWS Certificate Manager | HTTPS/SSL certificates |
+| AWS Systems Manager | Secure EC2 administration |
+| AWS Secrets Manager / Parameter Store | Secure application secrets |
+| MongoDB Atlas | Managed database |
 
-> **Database note:** MongoDB Atlas is the database layer; the infrastructure and application deployment remain AWS-focused.
+> **Architecture note:** MongoDB Atlas is used only as the database layer. The compute, networking, DNS, storage, security and monitoring architecture is AWS-based.
+
+<details>
+<summary>➕ Recommended advanced AWS extensions</summary>
+
+```text
+AWS WAF              → Web application protection
+Auto Scaling         → Automatic EC2 scaling
+ECR                  → Docker image registry
+CodeBuild/CodePipeline → CI/CD automation
+SNS                  → Monitoring notifications
+CloudTrail           → AWS activity auditing
+```
+
+</details>
 
 ---
 
@@ -168,7 +204,6 @@ User
 - HTTPS with ACM
 - Secure IAM permissions
 - Security Groups
-- Deployment documentation
 
 ---
 
@@ -178,25 +213,11 @@ User
 Student_Attendance_AWS_Project/
 │
 ├── frontend/
-│   ├── index.html
-│   ├── css/
-│   │   └── style.css
-│   └── js/
-│       └── app.js
-│
 ├── backend/
-│   ├── app.py
-│   └── requirements.txt
-│
 ├── database/
-│   └── schema.sql
-│
 ├── aws/
 │   └── deployment-guide.md
-│
 ├── docs/
-│   └── architecture.md
-│
 └── README.md
 ```
 
@@ -204,40 +225,14 @@ Student_Attendance_AWS_Project/
 
 # 🚀 Deployment
 
-A complete click-by-click deployment guide is available here:
+### 📖 Complete Deployment Guide
 
-**[`aws/deployment-guide.md`](Student_Attendance_AWS_Project/aws/deployment-guide.md)**
+👉 **[Open the AWS Click-by-Click Deployment Guide](Student_Attendance_AWS_Project/aws/deployment-guide.md)**
 
-The guide covers:
+The guide covers VPC, subnets, IAM, Security Groups, EC2, MongoDB Atlas, ALB, S3, Route 53, ACM/HTTPS, CloudWatch, testing, troubleshooting and cleanup.
 
-```text
-1. AWS Region
-2. VPC
-3. Availability Zones
-4. Public/Private Subnets
-5. Internet Gateway
-6. IAM Role
-7. Security Groups
-8. EC2 Instance 1
-9. EC2 Instance 2
-10. MongoDB Atlas
-11. Backend deployment
-12. Target Group
-13. Application Load Balancer
-14. S3 frontend
-15. Route 53
-16. ACM / HTTPS
-17. CloudWatch
-18. Testing
-19. Troubleshooting
-20. Cleanup
-```
-
----
-
-# 🖥️ Recommended Infrastructure
-
-For the production-style demonstration:
+<details>
+<summary>🖥️ Recommended infrastructure</summary>
 
 ```text
 VPC                 → 1
@@ -248,35 +243,24 @@ EC2 Instances       → 2
 Application ALB     → 1
 Target Group        → 1
 S3 Bucket           → 1
-Route 53            → 1 Hosted Zone
+Route 53 Hosted Zone→ 1
 ACM Certificate     → 1
 MongoDB Atlas       → 1 Cluster
 CloudWatch          → Monitoring
 ```
 
-### Why 2 EC2 instances?
+**Why 2 EC2 instances?** High availability, load balancing, health checks and multi-AZ demonstration.
 
-Two backend instances provide:
+For low-cost testing, the project can initially run with one EC2 instance.
 
-- High availability
-- Load balancing
-- Health-check based routing
-- Better fault tolerance
-- Multi-AZ demonstration
-
-For a low-cost learning environment, the architecture can initially be tested with **one EC2 instance**.
+</details>
 
 ---
 
 # 🍃 MongoDB Atlas
 
-MongoDB Atlas provides the managed database layer.
-
-### Database
-
 ```text
-Database:
-studentdb
+Database: studentdb
 
 Collections:
 ├── students
@@ -285,24 +269,22 @@ Collections:
 └── users
 ```
 
-### Environment Variables
+Example environment variables:
 
 ```bash
 export MONGODB_URI="<MONGODB_ATLAS_CONNECTION_STRING>"
 export DB_NAME="studentdb"
 ```
 
-⚠️ **Never commit database credentials, connection strings or `.env` files to GitHub.**
+⚠️ Never commit database credentials, connection strings or `.env` files.
 
 ---
 
 # 🔐 Security
 
-Security practices implemented/recommended:
-
 - IAM least-privilege access
 - Restricted EC2 Security Groups
-- ALB as public backend entry point
+- ALB as the public backend entry point
 - HTTPS using ACM
 - MongoDB Atlas network restrictions
 - Secure secret storage
@@ -310,8 +292,6 @@ Security practices implemented/recommended:
 - SSH restricted to My IP when required
 - CloudWatch monitoring
 - CloudTrail recommended for audit visibility
-
-### Never commit
 
 ```text
 .env
@@ -322,97 +302,54 @@ AWS_SECRET_ACCESS_KEY
 *.pem
 ```
 
+**These files/secrets must never be committed to GitHub.**
+
 ---
 
 # 📊 Monitoring
 
-### EC2
-
-```text
-CPU Utilization
-Network In
-Network Out
-Status Checks
-```
-
-### ALB
-
-```text
-Request Count
-Target Health
-HTTP 4XX
-HTTP 5XX
-Target Response Time
-```
-
-### Application
-
-```text
-Backend Logs
-API Errors
-Database Connectivity
-```
+| Layer | What to monitor |
+|---|---|
+| EC2 | CPU, network, status checks |
+| ALB | Requests, 4XX, 5XX, target health, response time |
+| Application | Backend logs, API errors, database connectivity |
 
 ---
 
 # 🧪 Testing
 
-### Local backend
-
 ```bash
+# AWS identity
+aws sts get-caller-identity
+
+# Local backend
 curl http://localhost/
-```
 
-### API
-
-```bash
+# API
 curl http://localhost/api/students
-```
 
-### ALB
-
-```bash
+# ALB
 curl http://<ALB_DNS_NAME>/
-```
 
-### Route 53
-
-```bash
+# DNS
 nslookup attendance.yourdomain.com
-```
 
-### HTTPS
-
-```bash
+# HTTPS
 curl -I https://attendance.yourdomain.com/
 ```
 
-### MongoDB
-
-Verify application/database connectivity through the backend without exposing credentials.
-
 ---
 
-# 🛠️ Useful AWS CLI Commands
+# 🛠️ Useful AWS CLI
 
 ```bash
-aws sts get-caller-identity
-
 aws ec2 describe-instances --output table
-
 aws ec2 describe-vpcs --output table
-
 aws ec2 describe-subnets --output table
-
 aws elbv2 describe-load-balancers --output table
-
 aws elbv2 describe-target-groups --output table
-
-aws elbv2 describe-target-health \
-  --target-group-arn <TARGET_GROUP_ARN>
-
+aws elbv2 describe-target-health --target-group-arn <TARGET_GROUP_ARN>
 aws s3 ls
-
 aws route53 list-hosted-zones --output table
 ```
 
@@ -420,51 +357,35 @@ aws route53 list-hosted-zones --output table
 
 # 🧹 Cost & Cleanup
 
-AWS resources can generate charges depending on the account, region and configuration.
+When the project is no longer required, remove unused resources such as ALB, EC2 instances, NAT Gateway, unused Elastic IPs, S3 resources, Route 53 hosted zones and the MongoDB Atlas cluster.
 
-After testing, remove resources that are no longer required:
-
-```text
-1. ALB
-2. Target Group
-3. EC2 Instances
-4. NAT Gateway
-5. Unused Elastic IPs
-6. S3 objects/bucket
-7. Route 53 hosted zone if unused
-8. VPC resources
-9. MongoDB Atlas cluster if unused
-```
-
-Always review the AWS Billing dashboard after cleanup.
+> 💰 Always check AWS Billing before and after deployment. Some resources can incur charges even when the application is not actively receiving traffic.
 
 ---
 
 # 📚 Learning Outcomes
 
-This project demonstrates practical knowledge of:
-
-- AWS Cloud
-- AWS VPC
-- Subnets
-- EC2
-- Application Load Balancer
-- Route 53
-- S3
-- IAM
-- Security Groups
-- CloudWatch
-- ACM
-- AWS CLI
-- REST APIs
-- MongoDB Atlas
-- Database connectivity
-- DNS
-- HTTPS
-- High availability
-- Multi-AZ architecture
-- Cloud security
-- Production-style deployment
+```text
+AWS Cloud
+VPC & Subnets
+EC2
+Application Load Balancer
+Route 53
+S3
+IAM
+Security Groups
+CloudWatch
+ACM / HTTPS
+AWS CLI
+REST APIs
+MongoDB Atlas
+Linux
+DNS
+High Availability
+Multi-AZ Architecture
+Cloud Security
+Production-style Deployment
+```
 
 ---
 
@@ -474,22 +395,15 @@ This project demonstrates practical knowledge of:
 
 > Designed and deployed a cloud-based student attendance and result management application using AWS VPC, EC2, Application Load Balancer, Route 53, S3, IAM, Security Groups, CloudWatch and ACM, with MongoDB Atlas as the managed database. Implemented REST APIs, multi-AZ backend deployment, secure DNS/HTTPS configuration, database integration and cloud monitoring.
 
-### Skills Demonstrated
+### Skills
 
-```text
-AWS | EC2 | VPC | ALB | Route 53 | S3 |
-IAM | Security Groups | CloudWatch | ACM |
-AWS CLI | REST API | MongoDB Atlas | Linux |
-Cloud Deployment | Networking | Cloud Security
-```
+`AWS` `EC2` `VPC` `ALB` `Route 53` `S3` `IAM` `CloudWatch` `ACM` `AWS CLI` `REST API` `MongoDB Atlas` `Linux` `Cloud Security`
 
 ---
 
 # 🎯 Interview Highlights
 
-### Why AWS?
-
-AWS provides the infrastructure for:
+**Why AWS?**
 
 ```text
 Compute       → EC2
@@ -502,36 +416,29 @@ Monitoring    → CloudWatch
 HTTPS         → ACM
 ```
 
-### Why MongoDB Atlas?
+**Why MongoDB Atlas?**
 
-MongoDB Atlas provides:
-
-- Managed database infrastructure
-- Automated database operations
-- Secure connectivity
-- Scalable deployment options
-- Reduced database administration overhead
+Managed database infrastructure, secure connectivity, scalable deployment options and reduced database administration overhead.
 
 ---
 
 # 👨‍💻 Author
 
-**Nitin Rathod**
-
+**Nitin Rathod**  
 AWS • DevOps • Cloud Computing
 
 ---
 
 ## ⭐ Project Status
 
-**AWS Cloud Architecture:** ✅  
-**MongoDB Atlas Integration:** ✅  
-**Route 53 Architecture:** ✅  
-**ALB Architecture:** ✅  
-**Multi-AZ EC2 Design:** ✅  
-**Security & Monitoring Design:** ✅  
-**Deployment Guide:** ✅
-
----
+| Area | Status |
+|---|---|
+| AWS Cloud Architecture | ✅ |
+| MongoDB Atlas Integration | ✅ |
+| Route 53 Architecture | ✅ |
+| ALB Architecture | ✅ |
+| Multi-AZ EC2 Design | ✅ |
+| Security & Monitoring Design | ✅ |
+| Deployment Guide | ✅ |
 
 > ⭐ Built as a hands-on AWS & DevOps portfolio project.
