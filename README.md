@@ -69,6 +69,9 @@ S3 → Static Frontend
 
 # 🏗️ Architecture
 
+<details open>
+<summary><strong>🏗️ View AWS Architecture</strong></summary>
+
 ```text
                          🌐 INTERNET
                               |
@@ -109,25 +112,47 @@ S3 → Static Frontend
        CloudWatch → Monitoring & Logs
 ```
 
-<details>
-<summary>🔍 View request flow</summary>
+</details>
+
+---
+
+# 🔄 Request Flow
+
+<details open>
+<summary><strong>🔄 Click to view end-to-end request flow</strong></summary>
 
 ```text
-User
- ↓
-Route 53
- ↓
+👤 User
+  ↓
+🌐 Route 53
+  ↓
+🔒 HTTPS / ACM
+  ↓
+⚖️ Application Load Balancer
+  ↓
+🏥 Healthy EC2 Backend
+  ↓
+🔌 REST API
+  ↓
+🍃 MongoDB Atlas
+  ↓
+📦 JSON Response
+  ↓
+👤 User
+```
+
+### Frontend Flow
+
+```text
+User Browser
+     ↓
+Amazon S3
+     ↓
+Frontend Application
+     ↓
+Route 53 / API Domain
+     ↓
 Application Load Balancer
- ↓
-Healthy EC2 Backend
- ↓
-REST API
- ↓
-MongoDB Atlas
- ↓
-Response
- ↓
-User
 ```
 
 </details>
@@ -157,12 +182,12 @@ User
 <summary>➕ Recommended advanced AWS extensions</summary>
 
 ```text
-AWS WAF              → Web application protection
-Auto Scaling         → Automatic EC2 scaling
-ECR                  → Docker image registry
-CodeBuild/CodePipeline → CI/CD automation
-SNS                  → Monitoring notifications
-CloudTrail           → AWS activity auditing
+AWS WAF                 → Web application protection
+Auto Scaling            → Automatic EC2 scaling
+ECR                     → Docker image registry
+CodeBuild/CodePipeline  → CI/CD automation
+SNS                     → Monitoring notifications
+CloudTrail              → AWS activity auditing
 ```
 
 </details>
@@ -231,27 +256,52 @@ Student_Attendance_AWS_Project/
 
 The guide covers VPC, subnets, IAM, Security Groups, EC2, MongoDB Atlas, ALB, S3, Route 53, ACM/HTTPS, CloudWatch, testing, troubleshooting and cleanup.
 
-<details>
-<summary>🖥️ Recommended infrastructure</summary>
+# 🖥️ Recommended Infrastructure
+
+<details open>
+<summary><strong>🖥️ Click to view infrastructure resources</strong></summary>
+
+| Resource | Recommended | Purpose |
+|---|---:|---|
+| VPC | 1 | Network isolation |
+| Availability Zones | 2 | High availability |
+| Public Subnets | 2 | ALB / public components |
+| Private Subnets | 2 | Recommended application isolation |
+| EC2 Instances | 2 | Backend/API high availability |
+| Application ALB | 1 | Load balancing |
+| Target Group | 1 | EC2 health & routing |
+| S3 Bucket | 1 | Static frontend |
+| Route 53 Hosted Zone | 1 | Custom DNS |
+| ACM Certificate | 1 | HTTPS |
+| MongoDB Atlas Cluster | 1 | Managed database |
+| CloudWatch | 1 service | Monitoring & logs |
+
+### Why 2 EC2 instances?
 
 ```text
-VPC                 → 1
-Availability Zones  → 2
-Public Subnets      → 2
-Private Subnets     → 2
-EC2 Instances       → 2
-Application ALB     → 1
-Target Group        → 1
-S3 Bucket           → 1
-Route 53 Hosted Zone→ 1
-ACM Certificate     → 1
-MongoDB Atlas       → 1 Cluster
-CloudWatch          → Monitoring
+                    Application Load Balancer
+                           /          \
+                          /            \
+                    EC2 AZ-1        EC2 AZ-2
+                       🟢               🟢
+                         \             /
+                          \           /
+                         MongoDB Atlas
 ```
 
-**Why 2 EC2 instances?** High availability, load balancing, health checks and multi-AZ demonstration.
+Benefits:
 
-For low-cost testing, the project can initially run with one EC2 instance.
+- 🔄 Load distribution
+- ❤️ Health checks
+- 🛡️ Better fault tolerance
+- 🌍 Multi-AZ architecture
+- 📈 Easier future scaling
+
+### 💰 Low-cost learning mode
+
+For initial testing, you can start with **1 EC2 instance** and later move to the 2-EC2 Multi-AZ design.
+
+> ⚠️ ALB, NAT Gateway, public IPv4 addresses and other AWS resources may incur charges. Check current AWS pricing before deployment.
 
 </details>
 
@@ -319,22 +369,11 @@ AWS_SECRET_ACCESS_KEY
 # 🧪 Testing
 
 ```bash
-# AWS identity
 aws sts get-caller-identity
-
-# Local backend
 curl http://localhost/
-
-# API
 curl http://localhost/api/students
-
-# ALB
 curl http://<ALB_DNS_NAME>/
-
-# DNS
 nslookup attendance.yourdomain.com
-
-# HTTPS
 curl -I https://attendance.yourdomain.com/
 ```
 
@@ -359,32 +398,17 @@ aws route53 list-hosted-zones --output table
 
 When the project is no longer required, remove unused resources such as ALB, EC2 instances, NAT Gateway, unused Elastic IPs, S3 resources, Route 53 hosted zones and the MongoDB Atlas cluster.
 
-> 💰 Always check AWS Billing before and after deployment. Some resources can incur charges even when the application is not actively receiving traffic.
+> 💰 Always check AWS Billing before and after deployment.
 
 ---
 
 # 📚 Learning Outcomes
 
 ```text
-AWS Cloud
-VPC & Subnets
-EC2
-Application Load Balancer
-Route 53
-S3
-IAM
-Security Groups
-CloudWatch
-ACM / HTTPS
-AWS CLI
-REST APIs
-MongoDB Atlas
-Linux
-DNS
-High Availability
-Multi-AZ Architecture
-Cloud Security
-Production-style Deployment
+AWS Cloud | VPC | EC2 | ALB | Route 53 | S3 |
+IAM | Security Groups | CloudWatch | ACM |
+AWS CLI | REST APIs | MongoDB Atlas | Linux |
+DNS | High Availability | Multi-AZ | Cloud Security
 ```
 
 ---
@@ -403,8 +427,6 @@ Production-style Deployment
 
 # 🎯 Interview Highlights
 
-**Why AWS?**
-
 ```text
 Compute       → EC2
 Networking    → VPC
@@ -415,10 +437,6 @@ Security      → IAM + Security Groups
 Monitoring    → CloudWatch
 HTTPS         → ACM
 ```
-
-**Why MongoDB Atlas?**
-
-Managed database infrastructure, secure connectivity, scalable deployment options and reduced database administration overhead.
 
 ---
 
